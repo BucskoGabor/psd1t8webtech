@@ -1,0 +1,28 @@
+body{
+    text-align: justify;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+#quote{
+    text-align: right;
+    font-style: italic;
+}
+#mainTitle{
+    text-align: center;
+    font-style: italic;
+    text-decoration: underline;
+}
+#wiki{
+    background-color: lightgray;
+    text-align: justify;
+    width: 30%;
+    padding: 0%;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+#wikih2{
+    text-align: center;
+    background-color: gray;
+    width: 50%;
+    margin-left: 25%;
+}
