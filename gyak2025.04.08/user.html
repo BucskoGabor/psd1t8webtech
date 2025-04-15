@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git App - user adatlap</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <img id="avatar_url" width="200" height="200">
+    <h4 id="name"></h4>
+    <p id="blog"></p>
+    <p id="location"></p>
+    <p id="bio"></p>
+    <p id="public_repos"></p>
+    <p id="followers"></p>
+    <script src="app.js"></script>
+    <script>
+        async function loadUser(userName) {
+            try {
+                const res = await fetch('https://api.github.com/users/' + userName, {
+                    headers: {
+                        'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN
+                    }
+                });
+
+                if (!res.ok) {
+                    throw 'Server error ocurred, statuc code: ' + res.statusText;
+                }
+
+                const data = await res.json();
+
+                if (data.avatar_url) {
+                    const imgElement = document.querySelector('#avatar_url');
+                    imgElement.src = data.avatar_url;
+                }
+
+                if(data.login){
+                    const nameElement = document.querySelector('#name');
+                    nameElement.textContent = 'Username: '+data.login;
+                }
+
+                if(data.blog){
+                    const blogElement = document.querySelector('#blog');
+                    blogElement.textContent = 'Blog: '+data.blog;
+                }
+
+                if(data.location){
+                    const locationElement = document.querySelector('#location');
+                    locationElement.textContent = 'Location: '+data.location;
+                }
+
+                if(data.bio){
+                    const bioElement = document.querySelector('#bio');
+                    bioElement.textContent = 'Bio: '+data.bio;
+                }
+
+                if(data.public_repos){
+                    const repoElement = document.querySelector('#public_repos');
+                    repoElement.textContent = 'Public repositories: '+data.public_repos;
+                }
+
+                if(data.followers){
+                    const followersElement = document.querySelector('#followers');
+                    followersElement.textContent = 'Followers: '+data.followers;
+                }
+            } catch (err) {
+                if(typeof err == 'string'){
+                    alert(err);
+                }
+                console.error(err);
+            }
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const userName = params.get('name');
+
+        if (!userName) {
+            window.location = 'index.html';
+        }
+
+        loadUser(userName);
+    </script>
+</body>
+
+</html>
